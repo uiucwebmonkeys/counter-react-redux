@@ -1,49 +1,28 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
+import Count from './Count';
 import './App.css';
-
-class Count extends Component {
-  render() {
-    return <p id="count">{this.props.count}</p>
-  }
-}
+import { increment, decrement } from './store';
 
 class App extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      count: 0,
-    };
-  }
-
-  increment = () => {
-    this.setState({
-      count: this.state.count + 1,
-    });
-  }
-
-  decrement = () => {
-    this.setState(function(prevState) {
-      return {
-        count: prevState.count - 1,
-      };
-    });
-  }
-
   render() {
     return (
       <div className="App counter-app">
         <h1>Counter</h1>
-        <Count count={this.state.count} />
+        <Count />
 
-        <div class="buttons">
-          <button onClick={this.increment} id="increment">+</button>
-          <button onClick={this.decrement} id="decrement">-</button>
+        <div className="buttons">
+          <button onClick={() => this.props.increment(1000)} id="increment">+</button>
+          <button onClick={this.props.decrement} id="decrement">-</button>
         </div>
       </div>
     );
   }
 }
 
-export default App;
+const mapDispatchToProps = {
+  increment,
+  decrement,
+};
+
+export default connect(undefined, mapDispatchToProps)(App);
